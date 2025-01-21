@@ -1,0 +1,43 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+  workflow_dispatch:
+
+permissions:
+  contents: write  # More secure than "write-all", limits permissions to repository contents.
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Set up CML
+      - name: Set up CML
+        uses: iterative/setup-cml@v2
+
+      # Install required packages
+      - name: Install Packages
+        run: make install
+
+      # Format the code
+      - name: Format
+        run: make format
+
+      # Train the model
+      - name: Train
+        run: make train
+
+      # Evaluate the model
+      - name: Evaluation
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: make eval
