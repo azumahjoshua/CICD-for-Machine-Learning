@@ -39,5 +39,5 @@ jobs:
       # Evaluate the model
       - name: Evaluation
         env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_TOKEN: ${{ secrets.TOKEN_SECRETS }}
         run: make eval
