@@ -6,6 +6,7 @@ format:
 	black *.py
 
 train:
+	mkdir -p Results Model
 	python train.py
 
 eval:
